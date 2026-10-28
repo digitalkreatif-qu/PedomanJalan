@@ -31,15 +31,19 @@ addEventListener('popstate',()=>{if(stack.length)popBack();else if(cur.k!=='home
 function render(s){
   pb.style.transform='scaleX(0)';bk.hidden=s.k==='home';st.hidden=s.k!=='read';
   if(s.k!=='tech'&&window.__TKUI)window.__TKUI.unmount();
+  if(s.k!=='mdp'&&window.__MDPUI)window.__MDPUI.unmount();
   if(s.k==='home'){HL='';q.value='';home()}
   else if(s.k==='search'){q.value=s.q;search(s.q)}
   else if(s.k==='tech'){HL='';q.value='';curSec=null;ti.textContent='Teknik';scrollTo(0,0);
     if(window.__TKUI)window.__TKUI.mount(m,s.id);else m.innerHTML='<p class="empty">Memuat modul teknik...</p>'}
+  else if(s.k==='mdp'){HL='';q.value='';curSec=null;ti.textContent='MDP 2024';scrollTo(0,0);
+    if(window.__MDPUI)window.__MDPUI.mount(m,s.id);else m.innerHTML='<p class="empty">Memuat modul MDP...</p>'}
   else if(s.k==='lib'){HL='';q.value='';curSec=null;ti.textContent='Pustaka';scrollTo(0,0);
     if(window.__LIB)window.__LIB.mount(m,s.tab);else m.innerHTML='<p class="empty">Memuat pustaka...</p>'}
   else{HL=s.hl||'';q.value=s.qv||'';open_(s.p,s.t)}
 }
 window.__libGo=tab=>{if(cur.k==='lib'){scrollTo(0,0);return}go({k:'lib',tab})};
+window.__mdpGo=id=>{if(cur.k==='mdp'){cur.id=id;render(cur);return}go({k:'mdp',id})};
 window.__techGo=id=>{if(cur.k==='tech'){cur.id=id;render(cur);return}go({k:'tech',id})};
 function divCards(){let h='';
   for(const v of D){
@@ -55,7 +59,7 @@ function home(){
   if(b.length){h+='<p class="pg">Penanda</p>';for(const x of b)h+=`<div class="r" tabindex="0" role="button" data-p="${x.p}">&#9733; ${esc(KK(x.k))} - ${esc(x.t)}</div>`}
   if(h)h+='<p class="pg">Semua divisi</p>';
   h+=divCards();
-  m.innerHTML=lyHead('home','sp',D.length+' bagian dokumen',h)+lyHead('home','tk','kalkulator teknik',techCards());
+  m.innerHTML=lyHead('home','sp',D.length+' bagian dokumen',h)+lyHead('home','tk','kalkulator teknik',techCards())+lyHead('home','md','Manual Desain Perkerasan Jalan',mdpCards());
   fillTk();scrollTo(0,0);
 }
 function updStar(){const on=!!curSec&&bms().some(b=>b.p===curSec.p);st.textContent=on?'\u2605':'\u2606';st.setAttribute('aria-pressed',on);st.setAttribute('aria-label',on?'Hapus penanda':'Tandai seksi ini')}
@@ -83,8 +87,8 @@ function search(t){
 function menu(o){dr.hidden=!o;hb.setAttribute('aria-expanded',o);if(o)nv.focus();else if(document.activeElement&&nv.contains(document.activeElement))hb.focus()}
 function setFz(n){fz=Math.max(14,Math.min(26,n));LS.set('sun_fz',fz);document.querySelectorAll('.txt').forEach(e=>e.style.fontSize=fz+'px');const f=$('fzv');if(f)f.textContent=fz}
 function setTheme(t){const r=document.documentElement;t==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',t);LS.set('sun_theme',t);nv.querySelectorAll('[data-th]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.th===t))}
-const LY={sp:{t:'Spesifikasi Umum 2025',i:'\u{1F4D8}'},tk:{t:'Teknik',i:'\u{1F3D7}\uFE0F'}};
-const LYK={nv:'sun_ly',home:'sun_lyh'},LYD={nv:{sp:true,tk:false},home:{sp:true,tk:true}};
+const LY={sp:{t:'Spesifikasi Umum 2025',i:'\u{1F4D8}'},tk:{t:'Teknik',i:'\u{1F3D7}\uFE0F'},md:{t:'MDP 2024',i:'\u{1F6E3}\uFE0F'}};
+const LYK={nv:'sun_ly',home:'sun_lyh'},LYD={nv:{sp:true,tk:false,md:false},home:{sp:true,tk:true,md:true}};
 const lyState=c=>Object.assign({},LYD[c],LS.get(LYK[c],{}));
 function lyHead(c,k,sub,body){const o=!!lyState(c)[k];return `<section class="ly" data-c="${c}" data-ly="${k}" data-open="${o?1:0}"><button type="button" class="lyh" aria-expanded="${o}" aria-controls="lyb-${c}-${k}"><span class="lyi" aria-hidden="true">${LY[k].i}</span><span class="lyt">${LY[k].t}<small>${sub}</small></span><span class="lyc" aria-hidden="true"></span></button><div class="lyb" id="lyb-${c}-${k}"><div class="lyx"${o?'':' inert'}>${body}</div></div></section>`}
 function setLy(el,o){const c=el.dataset.c,k=el.dataset.ly;el.dataset.open=o?1:0;el.querySelector('.lyh').setAttribute('aria-expanded',o);const x=el.querySelector('.lyx');o?x.removeAttribute('inert'):x.setAttribute('inert','');const v=lyState(c);v[k]=o;LS.set(LYK[c],v)}
@@ -92,6 +96,11 @@ function techCards(){const T=window.__TKUI;
   if(!T)return '<p class="pg">Memuat modul teknik...</p>';
   const cur=T.isOpen()?T.cur():'';
   return T.tools.map(t=>`<div class="tc${t.id===cur?' on':''}" tabindex="0" role="button" data-tech="${t.id}"><span class="no">${t.i}</span><span class="nm">${esc(t.n)}<small>${esc(t.d||'')}</small></span></div>`).join('')+'<p class="pg tkn">Hasil berupa estimasi awal; wajib diverifikasi ahli dan gambar kerja.</p>'}
+function mdpCards(){const T=window.__MDPUI;
+  if(!T)return '<p class="pg">Memuat modul MDP...</p>';
+  const cur=T.isOpen()?T.cur():'';
+  return T.tools.map(t=>`<div class="tc${t.id===cur?' on':''}" tabindex="0" role="button" data-mdp="${t.id}"><span class="no">${t.i}</span><span class="nm">${esc(t.n)}<small>${esc(t.d||'')}</small></span></div>`).join('')+'<p class="pg tkn">Rekomendasi awal dari katalog MDP 2024 (03/M/BM/2024); wajib diverifikasi perencana.</p>'}
+function fillMd(){const T=window.__MDPUI;document.querySelectorAll('.ly[data-ly="md"]').forEach(el=>{el.querySelector('.lyx').innerHTML=mdpCards();if(T)el.querySelector('.lyt small').textContent=T.tools.length+' alat: ESA, lentur, kaku, tabel'})}
 function fillTk(){const T=window.__TKUI;document.querySelectorAll('.ly[data-ly="tk"]').forEach(el=>{el.querySelector('.lyx').innerHTML=techCards();if(T)el.querySelector('.lyt small').textContent=(T.tools.length-1)+' kalkulator + katalog'})}
 function markNv(){try{nv.querySelectorAll('.s.on').forEach(x=>x.classList.remove('on'));if(!curSec)return;
   const el=nv.querySelector('.s[data-m="'+curSec.p+'"]');if(!el)return;el.classList.add('on');
@@ -103,8 +112,8 @@ function buildMenu(){
     for(const s of v.secs)sp+=`<div class="s" tabindex="0" role="button" data-m="${s.p}"><span class="k${v.n==='L'?' kl':''}">${s.k}</span><span class="t">${esc(s.t)}</span></div>`;sp+='</details>'}
   const top='<div class="nvt"><span class="nvb"><i aria-hidden="true">\u{1F4D8}</i>Spek Umum 2025</span><button type="button" id="nhm" aria-label="Ke beranda" title="Beranda">&#8962;</button><button type="button" id="nvx" aria-label="Tutup menu">&#10005;</button></div>';
   const foot='<div class="nvf"><div class="seg"><button id="fm" aria-label="Kecilkan huruf">A-</button><button disabled id="fzv">'+fz+'</button><button id="fp" aria-label="Besarkan huruf">A+</button></div><div class="seg"><button data-th="auto">Otomatis</button><button data-th="light">Terang</button><button data-th="dark">Gelap</button></div></div>';
-  nv.innerHTML=top+lyHead('nv','sp',D.length+' bagian dokumen',sp)+lyHead('nv','tk','kalkulator teknik',techCards())+foot;
-  fillTk();
+  nv.innerHTML=top+lyHead('nv','sp',D.length+' bagian dokumen',sp)+lyHead('nv','tk','kalkulator teknik',techCards())+lyHead('nv','md','Manual Desain Perkerasan',mdpCards())+foot;
+  fillTk();fillMd();
   $('nhm').onclick=()=>{menu(false);stack=[];cur={k:'home'};render(cur)};
   $('nvx').onclick=()=>menu(false);
   $('fm').onclick=()=>setFz(fz-2);$('fp').onclick=()=>setFz(fz+2);
@@ -115,12 +124,14 @@ if(!window.__nvBound){window.__nvBound=1;
   nv.addEventListener('click',e=>{
     const h=e.target.closest('.lyh');if(h){const el=h.parentNode;setLy(el,el.dataset.open!=='1');return}
     const t=e.target.closest('[data-m]');if(t){menu(false);const p=+t.dataset.m;go({k:'read',p,t:p});return}
-    const k=e.target.closest('[data-tech]');if(k&&window.__techGo){menu(false);window.__techGo(k.dataset.tech)}});
-  addEventListener('tk-ready',fillTk);
-  new MutationObserver(()=>{if(!dr.hidden){markNv();fillTk()}}).observe(dr,{attributes:true,attributeFilter:['hidden']})}
+    const k=e.target.closest('[data-tech]');if(k&&window.__techGo){menu(false);window.__techGo(k.dataset.tech)}
+    const k2=e.target.closest('[data-mdp]');if(k2&&window.__mdpGo){menu(false);window.__mdpGo(k2.dataset.mdp)}});
+  addEventListener('tk-ready',fillTk);addEventListener('mdp-ready',fillMd);
+  new MutationObserver(()=>{if(!dr.hidden){markNv();fillTk();fillMd()}}).observe(dr,{attributes:true,attributeFilter:['hidden']})}
 m.addEventListener('click',e=>{
   const lh=e.target.closest('.lyh');if(lh){const el=lh.parentNode;setLy(el,el.dataset.open!=='1');return}
   const tc=e.target.closest('[data-tech]');if(tc){if(window.__techGo)window.__techGo(tc.dataset.tech);return}
+  const mc=e.target.closest('[data-mdp]');if(mc){if(window.__mdpGo)window.__mdpGo(mc.dataset.mdp);return}
   const a=e.target.closest('a.x');
   if(a){e.preventDefault();const p=a.dataset.pg?+a.dataset.pg:resolve(a.dataset.ref);if(p)go({k:'read',p,t:p});return}
   const t=e.target.closest('[data-p]');if(!t)return;const p=+t.dataset.p;

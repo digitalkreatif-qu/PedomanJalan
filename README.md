@@ -63,6 +63,9 @@ Beranda dan hamburger sama-sama punya dua lapisan yang bisa dilipat/dibuka denga
 ## Modul Teknik Pro (75-teknik.js)
 Lapisan Teknik di hamburger membuka: U-Ditch (DS-1..6), Box Culvert + rekomendasi dari debit, Pasangan Batu, DPT (guling/geser/daya dukung), Bore Pile (Decourt-Quaresma). Asisten paham bahasa alami, mis. `box culvert 2x2 panjang 50 m debit 4`. Semua hasil = ESTIMASI AWAL; wajib diverifikasi ahli dan gambar kerja.
 
+## Lapisan MDP 2024 (77-mdp.js)
+Lapisan ketiga di beranda dan hamburger: Manual Desain Perkerasan Jalan 2024 (03/M/BM/2024). Halaman penuh dengan tab: Beban Lalu Lintas (CESA4/CESA5 dari LHR + VDF regional Lampiran H, 36 wilayah), Struktur Lentur (Bagan Desain 2, 3(1)-3(4), 3A, 3B + gambar skema), Perkerasan Kaku (Tabel 8.3, Bagan 8, 8A), Lalu Lintas Rendah (Bagan 4-7, Tabel 4.5), Tabel Acuan (2.1, 3.1, 4.1, 4.2). Hasil = rekomendasi awal; wajib diverifikasi dokumen MDP resmi.
+
 ## Susunan menu (tanpa duplikat)
 - **Beranda**: Lanjutkan membaca, Penanda, lapisan Spesifikasi Umum 2025 (kartu divisi + tombol PDF) dan lapisan Teknik.
 - **Hamburger**: bilah atas (ikon Beranda, tutup), daftar isi ringkas (seksi yang sedang dibaca ditandai), lapisan Teknik, footer ukuran huruf & tema. Tidak ada blok Navigasi, Penanda, maupun tombol PDF di sini.
