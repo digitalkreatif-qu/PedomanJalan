@@ -107,3 +107,9 @@ html body #nv details.dv:last-child{border-bottom:0}
 #nv .tc{padding:8px 10px;margin-bottom:6px;border-radius:12px;box-shadow:none}#nv .tc small{display:none}
 #nv .tc .no{width:30px;height:30px;font-size:15px;border-radius:9px;box-shadow:none}
 #nv .tc .nm{font-size:14px}
+
+/* Mode terpasang (PWA): tanpa kolom alamat, cegah tarik-segarkan & pantulan layar */
+@media (display-mode: standalone), (display-mode: minimal-ui){
+  html,body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
+  body{-webkit-touch-callout:none}
+}

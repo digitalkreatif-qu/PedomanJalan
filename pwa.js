@@ -8,6 +8,7 @@ addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;btn.s
 addEventListener('appinstalled',function(){dp=null;btn.style.display='none';ios.style.display='none'});
 btn.addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.finally(function(){dp=null;btn.style.display='none'})});
 var ua=navigator.userAgent,isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+if(!isIOS&&/android/i.test(ua))setTimeout(function(){if(!dp&&ios.style.display!=='block'){ios.innerHTML='Untuk memasang: buka menu browser (<b>&#8942;</b> / <b>&#9776;</b>), lalu pilih <b>Instal aplikasi</b> atau <b>Tambahkan ke layar utama</b>. Setelah terpasang, buka dari ikon di layar utama agar tampil tanpa kolom alamat.';ios.style.display='block'}},3500);
 if(isIOS){ios.innerHTML='Untuk memasang di iPhone/iPad: ketuk tombol <b>Bagikan</b> (kotak dengan panah), lalu pilih <b>Tambah ke Layar Utama</b>.';ios.style.display='block'}
 else if(!/^https:|^http:\/\/localhost/.test(location.href.slice(0,17))&&location.protocol!=='https:'){/* instal butuh HTTPS */}
 })();
