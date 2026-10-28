@@ -51,6 +51,9 @@ PDF `.bin` dan `vault.js` memakai satu kunci dokumen yang sama. Build memakai ul
 - Offline: halaman login dan dokumen tersimpan lewat service worker (PDF dan video tetap butuh internet).
 - Keyboard: kartu hasil/seksi bisa difokus dan dibuka dengan Enter/Spasi, Escape menutup panel.
 
+## Tata letak desktop (95-desktop.js)
+- Layar >= 1200 px: menu kiri permanen, sisi kanan langsung menampilkan halaman (terakhir dibaca, atau halaman pertama). Beranda tidak ditampilkan karena isinya sama dengan menu. Penanda tampil di atas menu kiri. HP/tablet tidak berubah.
+
 ## Tata letak fokus baca (90-focus.js)
 - Header ramping; kolom cari menyingkat saat membaca (ikon cari atau tombol `/`). Header menampilkan halaman aktif dan persen terbaca.
 - Header dan dok bawah menyingkir saat menggulir ke bawah, muncul lagi saat menggulir ke atas, di akhir halaman, atau saat panel terbuka.
