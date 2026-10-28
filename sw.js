@@ -1,8 +1,8 @@
 /* Service worker: cangkang login + vault.js tersimpan untuk dibuka offline.
    VER diisi otomatis oleh build.mjs. PDF terenkripsi (pdf/*.bin) tidak disimpan. */
-const VER='37ba9090ed';
+const VER='963712ada6';
 const CACHE='aibook-'+VER;
-const SHELL=['./','index.html','login.css','auth.js','pwa.js','vault.js?v=37ba9090ed','manifest.webmanifest','icon-192.png','icon-512.png'];
+const SHELL=['./','index.html','login.css','auth.js','pwa.js','vault.js?v=963712ada6','manifest.webmanifest','icon-192.png','icon-512.png'];
 
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>Promise.allSettled(SHELL.map(u=>c.add(new Request(u,{cache:'reload'}))))).then(()=>self.skipWaiting()));

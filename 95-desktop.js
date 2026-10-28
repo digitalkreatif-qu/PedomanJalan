@@ -11,10 +11,16 @@ const G=s=>(0,eval)(s);
 
 const css=d.createElement('style');
 css.textContent=`
-:root{--sw:clamp(300px,22vw,360px)}
+:root{--swo:clamp(300px,22vw,360px)}
 @media(min-width:1200px){
-  body.dk{padding-left:var(--sw)}
-  html body.dk #dr{position:fixed;inset:0 auto 0 0;width:var(--sw);z-index:100001}
+  body.dk{--sw:var(--swo);padding-left:var(--sw);transition:padding-left .24s cubic-bezier(.2,.8,.2,1),padding-right .24s cubic-bezier(.2,.8,.2,1)}
+  body.dk.dkc{--sw:0px}
+  html body.dk #dr{position:fixed;inset:0 auto 0 0;width:var(--swo);z-index:100001;transition:transform .24s cubic-bezier(.2,.8,.2,1),visibility 0s}
+  html body.dk.dkc #dr{transform:translateX(-100%);visibility:hidden;transition:transform .24s cubic-bezier(.2,.8,.2,1),visibility 0s .24s}
+  #dktg{position:fixed;top:50%;left:calc(var(--sw) - 1px);transform:translateY(-50%);z-index:100003;width:22px;height:64px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-left:0;border-radius:0 12px 12px 0;background:var(--pkbg,var(--bg));color:var(--acc);cursor:pointer;box-shadow:4px 0 14px #0b223014;transition:left .24s cubic-bezier(.2,.8,.2,1),background .15s}
+  #dktg:hover{background:var(--chip)}
+  #dktg svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .24s}
+  body.dk.dkc #dktg svg{transform:rotate(180deg)}
   body.dk .ov{display:none}
   html body.dk #nv{position:absolute;inset:0;width:auto;max-width:none;box-shadow:none;border-right:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none}
   body.dk #hb,body.dk #nvx,html body.dk #bk[hidden]{display:none}
@@ -28,7 +34,9 @@ css.textContent=`
   #dkbm .s{border-top:0;padding:8px;border-radius:10px;font-size:13.5px;line-height:1.35}
   #dkbm .s:hover{background:var(--chip)}
 }
-@media print{#dr{display:none!important}body.dk{padding-left:0!important}}
+#dktg{display:none}
+body.dk #dktg{display:grid}
+@media print{#dktg,#dr{display:none!important}body.dk{padding-left:0!important}}
 `;
 d.head.appendChild(css);
 
@@ -58,6 +66,16 @@ window.render=function(s){
   dkbm();
 };
 g('st').addEventListener('click',()=>setTimeout(dkbm,0));
+
+/* panah sembunyikan/tampilkan menu kiri (tersimpan di perangkat) */
+const tg=d.createElement('button');tg.id='dktg';tg.type='button';
+tg.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
+const setC=(c,save)=>{B.classList.toggle('dkc',c);tg.setAttribute('aria-expanded',!c);
+  tg.setAttribute('aria-label',c?'Tampilkan menu kiri':'Sembunyikan menu kiri');tg.title=tg.getAttribute('aria-label');
+  if(save)try{G("LS.set('sun_dkc',"+(c?'true':'false')+")")}catch(e){}};
+tg.onclick=()=>setC(!B.classList.contains('dkc'),true);
+d.body.appendChild(tg);
+try{setC(!!G("LS.get('sun_dkc',false)"),false)}catch(e){setC(false,false)}
 
 /* menu kiri selalu terbuka di desktop */
 let was=false;

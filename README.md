@@ -52,7 +52,7 @@ PDF `.bin` dan `vault.js` memakai satu kunci dokumen yang sama. Build memakai ul
 - Keyboard: kartu hasil/seksi bisa difokus dan dibuka dengan Enter/Spasi, Escape menutup panel.
 
 ## Tata letak desktop (95-desktop.js)
-- Layar >= 1200 px: menu kiri permanen, sisi kanan langsung menampilkan halaman (terakhir dibaca, atau halaman pertama). Beranda tidak ditampilkan karena isinya sama dengan menu. Penanda tampil di atas menu kiri. HP/tablet tidak berubah.
+- Layar >= 1200 px: menu kiri permanen (panah di tepinya untuk sembunyi/tampil, tersimpan), sisi kanan langsung menampilkan halaman (terakhir dibaca, atau halaman pertama). Beranda tidak ditampilkan karena isinya sama dengan menu. Penanda tampil di atas menu kiri. HP/tablet tidak berubah.
 
 ## Tata letak fokus baca (90-focus.js)
 - Header ramping; kolom cari menyingkat saat membaca (ikon cari atau tombol `/`). Header menampilkan halaman aktif dan persen terbaca.
