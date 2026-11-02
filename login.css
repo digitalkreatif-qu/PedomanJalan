@@ -33,7 +33,10 @@ body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);font:400 14.5
 .road path{fill:none;stroke:var(--sd);stroke-width:2;stroke-dasharray:2 11;stroke-linecap:round;vector-effect:non-scaling-stroke}
 
 /* kartu */
-.box{position:relative;z-index:1;width:100%;max-width:400px;padding:34px 30px 22px;border-radius:34px;background:var(--bg);box-shadow:var(--raise);transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .15s ease-out,box-shadow .3s;animation:in .7s cubic-bezier(.2,.9,.3,1) backwards}
+.box,.back{position:relative;width:100%;padding:34px 30px 22px;border-radius:34px;background:var(--bg);box-shadow:var(--raise);transition:box-shadow .3s;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.scene{position:relative;z-index:1;width:100%;max-width:400px;perspective:1600px;animation:in .7s cubic-bezier(.2,.9,.3,1) backwards}
+.flip{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,.2,.2,1)}
+.scene.flipped .flip{transform:rotateY(180deg)}
 @keyframes in{from{opacity:0;transform:translateY(22px) scale(.97)}}
 .box.shake{animation:shk .42s}
 @keyframes shk{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
@@ -87,9 +90,33 @@ button:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
 .mono{font:600 10px var(--sans);letter-spacing:.12em;padding:4px 10px;border-radius:999px;box-shadow:inset 2px 2px 5px var(--sd),inset -2px -2px 5px var(--sl)}
 
 #splash{position:fixed;inset:0;z-index:5;display:none;place-content:center;justify-items:center;gap:20px;background:var(--bg);font:600 13px var(--sans);letter-spacing:.06em;color:var(--mut)}
-body.auto #splash{display:grid}body.auto .box{visibility:hidden}
+body.auto #splash{display:grid}body.auto .scene{visibility:hidden}
 .spin{width:78px;height:78px;border-radius:50%;background:var(--bg);box-shadow:var(--raise-s);border:4px solid transparent;border-top-color:var(--ac);border-right-color:var(--ac2);animation:rt .9s linear infinite}
 @keyframes rt{to{transform:rotate(360deg)}}
 @media(max-width:380px){.box{padding:30px 20px 18px}.ttl p{font-size:12px}}
 @media(max-height:640px){.emb{margin-top:-62px;width:72px;height:72px}.box{margin-top:50px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.spin{animation:rt 2s linear infinite!important}}
+
+/* sisi belakang kartu: keterangan dokumen */
+.back{position:absolute;inset:0;display:flex;flex-direction:column;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+h2{margin:12px 0 4px;font:700 clamp(21px,6vw,24px)/1.15 var(--sans);color:var(--fg)}
+.back .ttl{margin-bottom:0}
+.scroll{flex:1;min-height:0;overflow-y:auto;margin:10px -8px 0;padding:8px 8px 26px;-webkit-mask-image:linear-gradient(#000 calc(100% - 30px),transparent);mask-image:linear-gradient(#000 calc(100% - 30px),transparent);scrollbar-width:thin;scrollbar-color:var(--sd) transparent}
+.scroll p{margin:0 0 12px;font-size:12.5px;line-height:1.6;color:var(--mut)}
+.scroll .meta{padding:12px 14px;border-radius:16px;box-shadow:var(--press);text-align:center;font-size:12px}
+.scroll .meta b{color:var(--fg);font-weight:600}
+h3{margin:16px 2px 9px;font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ac)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font:600 11px var(--sans);padding:6px 12px;border-radius:999px;color:var(--fg);box-shadow:var(--raise-s);box-shadow:3px 3px 7px var(--sd),-3px -3px 7px var(--sl)}
+.divs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:10px}
+.divs li{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:14px;box-shadow:var(--press);font-size:12.5px;font-weight:500;color:var(--fg);line-height:1.3}
+.divs b{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 11px var(--sans);color:var(--ac);background:var(--bg);box-shadow:3px 3px 6px var(--sd),-3px -3px 6px var(--sl)}
+.flipbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;font:500 12.5px var(--sans);color:var(--mut)}
+.rnd{flex:none;width:46px;height:46px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--bg);color:var(--ac);cursor:pointer;box-shadow:var(--raise-s);transition:box-shadow .2s,background .25s,color .2s}
+.rnd:hover,.rnd:focus-visible{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac)}
+.rnd:active{box-shadow:var(--press)}
+.f input.hide{-webkit-text-security:disc}
+@media(max-width:380px){.divs li{font-size:12px}}
+/* hanya sisi yang menghadap yang menerima klik/sentuh */
+.scene:not(.flipped) .back{pointer-events:none}
+.scene.flipped .box{pointer-events:none}

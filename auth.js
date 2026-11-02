@@ -76,4 +76,15 @@ function loop(t){draw(t);raf=requestAnimationFrame(loop)}
 addEventListener('resize',()=>{size()});size();
 if(!rm){raf=requestAnimationFrame(loop);document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(raf);if(!document.hidden)raf=requestAnimationFrame(loop)})}
 })();
+
+/* mata pada username (tersembunyi memakai text-security; cadangan type=password bila tidak didukung) */
+(function(){const u=$('u'),b=$('eyeu');if(!u||!b)return;const sup=window.CSS&&CSS.supports&&CSS.supports('-webkit-text-security','disc');
+function hide(on){if(sup)u.classList.toggle('hide',on);else u.type=on?'password':'text';b.innerHTML=on?EYE:OFF;const t=on?'Tampilkan username':'Sembunyikan username';b.setAttribute('aria-label',t);b.title=t}
+b.addEventListener('click',()=>hide(!(sup?u.classList.contains('hide'):u.type==='password')))})();
+/* kartu bisa dibalik: sisi belakang berisi keterangan dokumen */
+(function(){const sc=$('scene'),fr=$('box'),bk=$('back'),i=$('info'),r=$('back-btn');if(!sc||!bk||!i||!r)return;
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function flip(on){sc.classList.toggle('flipped',on);fr.inert=on;bk.inert=!on;setTimeout(()=>(on?r:i).focus({preventScroll:true}),rm?0:420)}
+i.addEventListener('click',()=>flip(true));r.addEventListener('click',()=>flip(false));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&sc.classList.contains('flipped'))flip(false)})})();
 })();

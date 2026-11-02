@@ -17,31 +17,47 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<link rel="stylesheet" href="login.css?v=941251e93e">
+<link rel="stylesheet" href="login.css?v=dd2a94a86a">
 </head>
 <body>
 <div class="bg" aria-hidden="true"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><svg class="road" viewBox="0 0 400 120" preserveAspectRatio="none"><path d="M0 70 C80 20 140 110 220 60 S350 30 400 70"/></svg></div>
 
+<div class="scene" id="scene"><div class="flip">
 <main class="box" id="box">
 <div class="emb" aria-hidden="true"><svg viewBox="0 0 48 48"><path class="hx" d="M24 3l18 10.5v21L24 45 6 34.5v-21z"/><path class="hx2" d="M24 9l12.8 7.4v14.8L24 38.6 11.2 31.2V16.4z"/><text x="24" y="29" text-anchor="middle">SU</text></svg></div>
-<div class="ttl"><span class="pill"><i></i>AREA TERBATAS</span><h1>Masuk ke Dokumen</h1></div>
+<div class="ttl"><span class="pill"><i></i>AREA TERBATAS</span><h1>Masuk ke Dokumen</h1><p>Spek Umum 2025 &middot; Spesifikasi Teknis Jalan &amp; Jembatan</p></div>
 
 <form id="f" method="post" action="javascript:void(0)" autocomplete="on" novalidate>
 <label for="u">Username</label>
-<div class="f"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><input id="u" name="username" placeholder="Username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
+<div class="f"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><input id="u" name="username" placeholder="Username" style="padding-right:50px" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"><button type="button" class="eye" id="eyeu" aria-label="Sembunyikan username" title="Sembunyikan username"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10.9 10.9 0 0 1 12 19c-6.5 0-10-7-10-7a18 18 0 0 1 4.1-5M9.9 5.2A10 10 0 0 1 12 5c6.5 0 10 7 10 7a18 18 0 0 1-2.2 3.2M1 1l22 22"/><path d="M14.1 14.1a3 3 0 1 1-4.2-4.2"/></svg></button></div>
 <label for="p">Password <em id="caps" hidden>Caps Lock aktif</em></label>
 <div class="f"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg><input id="p" name="password" placeholder="Password" style="padding-right:50px" type="password" autocomplete="current-password"><button type="button" class="eye" id="eye" aria-label="Lihat password" title="Lihat password"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
 <label class="keep" for="keep"><input type="checkbox" id="keep" checked><span class="sw"></span><span>Tetap masuk di perangkat ini</span></label>
 <button id="go" type="submit"><span>Masuk</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
 <div id="msg" role="alert"></div>
 <button id="inst" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>Instal Aplikasi</span></button><div id="ios" role="note"></div>
+<div class="flipbar"><span>Apa isi dokumen ini?</span><button type="button" class="rnd" id="info" aria-label="Lihat keterangan dokumen" title="Tentang dokumen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></div>
 <footer class="sec"><span class="lock"><i class="dot"></i>Akses terenkripsi</span><span class="mono">AES-256-GCM</span></footer>
 </main>
+<aside class="back" id="back" aria-label="Tentang dokumen" inert>
+<div class="emb" aria-hidden="true"><svg viewBox="0 0 48 48"><path class="hx" d="M24 3l18 10.5v21L24 45 6 34.5v-21z"/><path class="hx2" d="M24 9l12.8 7.4v14.8L24 38.6 11.2 31.2V16.4z"/><text x="24" y="29" text-anchor="middle">SU</text></svg></div>
+<div class="ttl"><span class="pill"><i></i>TENTANG DOKUMEN</span><h2>Spesifikasi Umum 2025</h2><p>Untuk Pekerjaan Konstruksi Jalan dan Jembatan</p></div>
+<div class="scroll">
+<p class="meta"><b>Kementerian Pekerjaan Umum</b><br>Direktorat Jenderal Bina Marga<br>SE Dirjen Bina Marga No. 07/SE/Db/2025</p>
+<p>Acuan teknis bagi penyelenggara jalan dan penyedia jasa untuk pelaksanaan pekerjaan, penerimaan hasil, serta pengukuran dan pembayaran, agar mutu, administrasi, dan waktu tertib dan dapat dipertanggungjawabkan.</p>
+<h3>Baru di edisi 2025</h3>
+<div class="chips"><span>BIM</span><span>SMKK</span><span>Tempat istirahat &amp; fasilitas pelayanan</span><span>Penerimaan dengan IRI awal rata-rata</span></div>
+<h3>Isi dokumen</h3>
+<ol class="divs"><li><b>01</b><span>Umum &amp; Penerapan SMKK</span></li><li><b>02</b><span>Drainase</span></li><li><b>03</b><span>Pekerjaan Tanah &amp; Geosintetik</span></li><li><b>04</b><span>Pekerjaan Preventif</span></li><li><b>05</b><span>Perkerasan Berbutir &amp; Beton Semen</span></li><li><b>06</b><span>Perkerasan Aspal</span></li><li><b>07</b><span>Struktur</span></li><li><b>08</b><span>Rehabilitasi Jembatan</span></li><li><b>09</b><span>Pekerjaan Harian &amp; Lain-lain</span></li><li><b>10</b><span>Pekerjaan Pemeliharaan</span></li><li class="wide"><b>+</b><span>Lampiran</span></li></ol>
+</div>
+<div class="flipbar"><span>Kembali ke login</span><button type="button" class="rnd" id="back-btn" aria-label="Kembali ke login" title="Kembali"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button></div>
+</aside>
+</div></div>
 
 <noscript><p style="position:relative;z-index:3;text-align:center;padding:20px">Halaman ini membutuhkan JavaScript.</p></noscript>
 <div id="splash" role="status"><div class="spin"></div><div>Sesi ditemukan, masuk otomatis...</div></div>
 <script src="vault.js?v=963712ada6"></script>
-<script src="auth.js?v=3017e92cd8"></script>
+<script src="auth.js?v=c312f9a184"></script>
 <script src="pwa.js?v=7c41b17348"></script>
 </body>
 </html>
