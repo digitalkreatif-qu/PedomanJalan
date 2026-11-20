@@ -18,7 +18,12 @@ function tutup(){
   ['ai','np','pk'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=true});
   {const dr=document.getElementById('dr'),x=document.getElementById('nvx');if(dr&&!dr.hidden&&x)x.click()}
   try{window.close()}catch(e){}
-  setTimeout(()=>{if(!window.closed)tcSay('Tab tidak bisa ditutup otomatis oleh browser. Silakan tutup manual. Login Anda tetap tersimpan.')},250);
+  setTimeout(()=>{if(window.closed)return;
+    const pwa=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
+    /* Tab biasa tidak boleh ditutup skrip: kosongkan tampilan (tombol Kembali browser membuka lagi; login tetap tersimpan) */
+    if(pwa)tcSay('Aplikasi tidak bisa ditutup otomatis di perangkat ini. Tutup lewat pengalih aplikasi. Login tetap tersimpan.');
+    else{try{location.href='about:blank'}catch(e){tcSay('Tab tidak bisa ditutup otomatis. Silakan tutup manual. Login tetap tersimpan.')}}
+  },200);
 }
 mk('✕ Tutup',tutup);document.body.appendChild(fab);
 /* Menu samping: Cetak (admin) dan Bagikan (HP) dipindah dari dok/header agar ringkas */
