@@ -20,18 +20,17 @@ function tutup(){
   try{window.close()}catch(e){}
   setTimeout(()=>{if(!window.closed)tcSay('Tab tidak bisa ditutup otomatis oleh browser. Silakan tutup manual. Login Anda tetap tersimpan.')},250);
 }
-document.body.appendChild(fab);
-/* Menu samping: Cetak (admin) dan Tutup dipindah dari dok bawah agar dok ringkas */
+mk('✕ Tutup',tutup);document.body.appendChild(fab);
+/* Menu samping: Cetak (admin) dan Bagikan (HP) dipindah dari dok/header agar ringkas */
 (function(){
   const nvEl=document.getElementById('nv');if(!nvEl)return;
   const ic=d=>'<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg>';
-  const PR=ic('<path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/>'),CL=ic('<path d="M18 6 6 18M6 6l12 12"/>');
+  const PR=ic('<path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/>');
   const SH=ic('<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>');
   const add=()=>{const f=nvEl.querySelector('.nvf');if(!f||f.querySelector('.nvx2'))return;
     const s=document.createElement('div');s.className='seg nvx2';
     {const b=document.createElement('button');b.type='button';b.className='nvsh';b.title='Bagikan aplikasi';b.innerHTML=SH+'<span>Bagikan</span>';b.onclick=()=>{const x=document.getElementById('sh');if(x)x.click()};s.appendChild(b)}
     if(A){const b=document.createElement('button');b.type='button';b.title='Cetak halaman';b.innerHTML=PR+'<span>Cetak</span>';b.onclick=()=>print();s.appendChild(b)}
-    const c=document.createElement('button');c.type='button';c.title='Tutup aplikasi (login tetap tersimpan)';c.innerHTML=CL+'<span>Tutup</span>';c.onclick=tutup;s.appendChild(c);
     f.appendChild(s)};
   add();new MutationObserver(add).observe(nvEl,{childList:true});
 })();

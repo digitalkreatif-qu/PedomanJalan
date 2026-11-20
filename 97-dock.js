@@ -1,14 +1,15 @@
-/* Dok bawah: ikon garis (SVG), tampilan ringkas & elegan. Isi dok: Catatan, Baca, Asisten, Pustaka.
-   Cetak (admin) dan Tutup dipindah ke menu samping (lihat 60-mobile.js). */
+/* Dok bawah: ikon garis (SVG), tampilan ringkas & elegan. Isi dok: Catatan, Baca, Asisten, Pustaka, Tutup.
+   Cetak (admin) dipindah ke menu samping (lihat 60-mobile.js). */
 (function(){
   const sv=d=>'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+d+'</svg>';
   const IC={
     Catatan:sv('<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>'),
     Baca:sv('<path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/>'),
     Asisten:sv('<path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9z"/><path d="M19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/>'),
+    Tutup:sv('<path d="M18 6 6 18M6 6l12 12"/>'),
     Pustaka:sv('<path d="M3 4h4v16H3z"/><path d="M9 4h4v16H9z"/><path d="M15.3 5.6l3.9 1-3.4 13.8-3.9-1z"/>')
   };
-  const TT={Catatan:'Catatan pribadi',Baca:'Bacakan dokumen',Asisten:'Asisten dokumen',Pustaka:'Pustaka & lampiran'};
+  const TT={Catatan:'Catatan pribadi',Baca:'Bacakan dokumen',Asisten:'Asisten dokumen',Pustaka:'Pustaka & lampiran',Tutup:'Tutup aplikasi (login tetap tersimpan)'};
   const css=document.createElement('style');
   css.textContent=`
 html body .fab{gap:2px!important;padding:6px!important;border-radius:24px!important;border:1px solid var(--line)!important;box-shadow:var(--sh),0 0 0 1px var(--glow)!important;-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);overflow:visible}
@@ -23,6 +24,8 @@ html body .fab button[aria-pressed=true]{background:var(--chip)!important;color:
 html body .fab button[aria-pressed=true]::after{left:50%;right:auto;bottom:3px;width:14px;height:3px;margin-left:-7px;border-radius:3px;background:var(--acc)}
 .nvx2 button{display:flex;align-items:center;justify-content:center;gap:6px}.nvx2 button svg{flex:none}
 .nvx2 button{font-size:12.5px!important}.nvx2 .nvsh{display:none}
+html body .fab button:last-child::before{content:"";position:absolute;left:-2px;top:15px;bottom:15px;width:1px;background:var(--line)}
+@media(min-width:601px){.nvx2:not(:has(button:not(.nvsh))){display:none}}
 @media(max-width:600px){
 html body>header .row{gap:4px!important}
 html body #hb,html body #bk,html body #st,html body #fs,html body #sb,html body #lo{width:36px!important;height:36px!important;flex:none}
@@ -36,7 +39,7 @@ html body .fab button{min-width:0;flex:1 1 0!important;height:52px;padding:6px 2
   const tune=()=>{
     fab.querySelectorAll('button').forEach(b=>{
       const sp=b.querySelector('span'),k=sp?sp.textContent.trim():'';
-      if(k==='Cetak'||k==='Tutup'){b.remove();return}   /* dipindah ke menu samping */
+      if(k==='Cetak'){b.remove();return}   /* dipindah ke menu samping */
       const i=b.querySelector('i');
       if(IC[k]&&i&&!i.querySelector('svg')){i.innerHTML=IC[k];b.title=TT[k]||k}
     });
